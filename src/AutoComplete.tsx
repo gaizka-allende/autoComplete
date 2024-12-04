@@ -102,6 +102,8 @@ export function AutoComplete<T>(props: AutoCompleteProps) {
                       } py-1 pr-1 font-mono font-medium text-xs leading-6 text-sky-500 whitespace-nowrap dark:text-sky-400 border-t border-slate-100 dark:border-slate-400/10`}
                       onClick={() => {
                         if (onResultClick) {
+                          input.current!.value = result;
+                          resultsElem.current?.classList.add("hidden");
                           onResultClick(result);
                         }
                       }}
