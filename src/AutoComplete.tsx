@@ -1,6 +1,7 @@
 import { ReactNode, useRef, useState, useEffect } from "react";
 interface AutoCompleteProps {
   apiURL: string;
+  onResultClick?: (result: string) => void;
 }
 
 const timer = (s: number) => new Promise((res) => setTimeout(res, s * 1000));
@@ -18,7 +19,7 @@ const apiResponse = [
 ];
 
 export function AutoComplete<T>(props: AutoCompleteProps) {
-  const { apiURL } = props;
+  const { apiURL, onResultClick } = props;
   const input = useRef<HTMLInputElement>(null);
   const loaderElem = useRef<HTMLDivElement>(null);
   const resultsElem = useRef<HTMLDivElement>(null);
@@ -97,6 +98,11 @@ export function AutoComplete<T>(props: AutoCompleteProps) {
                     <li
                       key={`result-${result}-${index}`}
                       className="py-1 pr-1 font-mono font-medium text-xs leading-6 text-sky-500 whitespace-nowrap dark:text-sky-400 border-t border-slate-100 dark:border-slate-400/10"
+                      onClick={() => {
+                        if (onResultClick) {
+                          onResultClick(result);
+                        }
+                      }}
                     >
                       <span>
                         {result.slice(
