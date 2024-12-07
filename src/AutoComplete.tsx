@@ -90,45 +90,46 @@ export function AutoComplete<T>(props: AutoCompleteProps) {
             });
 
             loaderElem.current?.classList.add("hidden");
+            if (results.length === 0) {
+              return;
+            }
             setResults(
               <ul>
-                {results &&
-                  Array.isArray(results) &&
-                  results.map((result, index) => (
-                    <li
-                      key={`result-${result}-${index}`}
-                      className={`${
-                        onResultClick ? "cursor-pointer" : ""
-                      } py-1 pr-1 font-mono font-medium text-xs leading-6 text-sky-500 whitespace-nowrap dark:text-sky-400 border-t border-slate-100 dark:border-slate-400/10`}
-                      onClick={() => {
-                        if (onResultClick) {
-                          input.current!.value = result;
-                          resultsElem.current?.classList.add("hidden");
-                          onResultClick(result);
-                        }
-                      }}
-                    >
-                      <span>
-                        {result.slice(
-                          0,
-                          result
-                            .toUpperCase()
-                            .indexOf(e.target.value.toUpperCase())
-                        )}
-                      </span>
-                      <span className="bg-yellow-300">
-                        {e.target.value.toLowerCase()}
-                      </span>
-                      <span>
-                        {result.slice(
-                          result
-                            .toUpperCase()
-                            .indexOf(e.target.value.toUpperCase()) +
-                            e.target.value.length
-                        )}
-                      </span>
-                    </li>
-                  ))}
+                {results.map((result, index) => (
+                  <li
+                    key={`result-${result}-${index}`}
+                    className={`${
+                      onResultClick ? "cursor-pointer" : ""
+                    } py-1 pr-1 font-mono font-medium text-xs leading-6 text-sky-500 whitespace-nowrap dark:text-sky-400 border-t border-slate-100 dark:border-slate-400/10`}
+                    onClick={() => {
+                      if (onResultClick) {
+                        input.current!.value = result;
+                        resultsElem.current?.classList.add("hidden");
+                        onResultClick(result);
+                      }
+                    }}
+                  >
+                    <span>
+                      {result.slice(
+                        0,
+                        result
+                          .toUpperCase()
+                          .indexOf(e.target.value.toUpperCase())
+                      )}
+                    </span>
+                    <span className="bg-yellow-300">
+                      {e.target.value.toLowerCase()}
+                    </span>
+                    <span>
+                      {result.slice(
+                        result
+                          .toUpperCase()
+                          .indexOf(e.target.value.toUpperCase()) +
+                          e.target.value.length
+                      )}
+                    </span>
+                  </li>
+                ))}
               </ul>
             );
             resultsElem.current?.classList.remove("hidden");
