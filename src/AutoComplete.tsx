@@ -118,7 +118,13 @@ export function AutoComplete<T>(props: AutoCompleteProps) {
                       )}
                     </span>
                     <span className="bg-yellow-300">
-                      {e.target.value.toLowerCase()}
+                      {result
+                        .toUpperCase()
+                        .indexOf(e.target.value.toUpperCase()) === 0
+                        ? `${e.target.value
+                            .charAt(0)
+                            .toUpperCase()}${e.target.value.slice(1)}`
+                        : e.target.value.toLowerCase()}
                     </span>
                     <span>
                       {result.slice(
